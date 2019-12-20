@@ -15,11 +15,9 @@ import { AuthContext } from './Auth';
 
 const useStyles = makeStyles(theme => ({
     root: {
-        flexGrow: 1,
-        // backgroundColor: "#F5F5F5"
+        flexGrow: 1
     },
     paper: {
-        padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
@@ -35,7 +33,7 @@ export default function Overview() {
         load ? <LoadingCircle />
             : (
                 <div className={classes.root}>
-                    <Grid container spacing={1} style={{ margin: 5 }}>
+                    <Grid container spacing={1}>
                         <Grid item md xs >
                             {/* first column */}
                             <Grid container direction="column" spacing={1}>

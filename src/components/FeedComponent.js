@@ -69,7 +69,7 @@ export default function FeedComponent() {
         <Card className={classes.card}>
             <CardContent>
                 <Typography className={classes.title} color="textPrimary" gutterBottom>Activity Feed</Typography>
-                <Grid style={{maxWidth:1000}}>
+                <Grid>
                     {
                         feedList.map(feed => <FeedEntryComponent item={feed.item} description={feed.tableNum} />)
                     }

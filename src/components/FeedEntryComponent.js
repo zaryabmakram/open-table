@@ -8,7 +8,6 @@ import Box from '@material-ui/core/Box';
 import Clock from 'react-live-clock';
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
-        marginLeft: 20,
         textAlign: 'center'
     },
     avatar: {

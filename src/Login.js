@@ -61,7 +61,7 @@ const Login = ({ history }) => {
 
 const { user } = useContext(AuthContext);
 if (user) {
-    return <Redirect to="/" />
+    return <Redirect to="/open-table/" />
 }
 
 return (

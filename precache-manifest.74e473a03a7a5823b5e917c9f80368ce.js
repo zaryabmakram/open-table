@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f8d3c975473e8b55965b6c67f9c58945",
+    "revision": "775fb5b05845860839aa5861ff4fc586",
     "url": "/open-table/index.html"
   },
   {
-    "revision": "64488cb60a9a84fcb74f",
+    "revision": "13641ea473ab664ddf55",
     "url": "/open-table/static/css/main.b100e6da.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/open-table/static/js/2.b3fa79ee.chunk.js"
   },
   {
-    "revision": "64488cb60a9a84fcb74f",
-    "url": "/open-table/static/js/main.b3d691ab.chunk.js"
+    "revision": "13641ea473ab664ddf55",
+    "url": "/open-table/static/js/main.4cdba64d.chunk.js"
   },
   {
     "revision": "7f555989fd4768469dac",

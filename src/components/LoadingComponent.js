@@ -20,9 +20,8 @@ export default function CircularDeterminate() {
       setProgress(oldProgress => (oldProgress >= 100 ? 0 : oldProgress + 1));
     }
 
-    const timer = setInterval(tick, 20);
     return () => {
-      clearInterval(timer);
+      tick();
     };
   }, []);
 
@@ -31,7 +30,7 @@ export default function CircularDeterminate() {
     className={classes.progress}
     variant="determinate"
     value={progress}
-    color="secondary"
+    color="primary"
     />
   );
 }

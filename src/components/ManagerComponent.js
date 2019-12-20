@@ -8,6 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 const useStyles = makeStyles({
   card: {
     minWidth: 275,
+    minHeight: 275
     // maxWidth: 300,
   },
   title: {
@@ -30,9 +31,8 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard() {
+export default function ManagerComponent(props) {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <Card className={classes.card}>
@@ -44,7 +44,7 @@ export default function SimpleCard() {
         <Avatar alt="Remy Sharp" className={classes.avatar} />
 
         <Typography className={classes.lowText}>
-            Zaryab Akram
+            {props.name}
         </Typography>
       </CardContent>
     </Card>

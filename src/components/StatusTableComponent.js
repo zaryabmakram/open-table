@@ -1,84 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
+import app from './../firebase'
 const columns = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-  {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
-    align: 'right',
-    format: value => value.toLocaleString(),
-  },
-  {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
-    minWidth: 170,
-    align: 'right',
-    format: value => value.toLocaleString(),
-  },
-  {
-    id: 'density',
-    label: 'Density',
-    minWidth: 170,
-    align: 'right',
-    format: value => value.toFixed(2),
-  },
-];
-
-function createData(name, code, population, size) {
-  const density = population / size;
-  return { name, code, population, size, density };
-}
-
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767),
+  { id: 'table', label: 'Table', minWidth: 170 },
+  { id: 'customer', label: 'Customer', minWidth: 170 },
+  { id: 'people', label: 'People', minWidth: 170 },
+  { id: 'total', label: 'Total (Rs)', minWidth: 170 },
+  { id: 'status', label: 'Status', minWidth: 170 }
 ];
 
 const useStyles = makeStyles({
   root: {
     width: '100%',
+    minHeight: 275
   },
   tableWrapper: {
     overflow: 'auto',
   },
 });
 
-export default function StickyHeadTable() {
+export default function StatusTableComponent() {
+
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(4);
+  const [orderList, setOrderList] = useState([])
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  useEffect(() => {
+    const tablesRef = app.database().ref().child('orders')
+    tablesRef.on('value', snap => {
+      const orderData = snap.val()
+      let tableData = []
 
-  const handleChangeRowsPerPage = event => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+      for (let key in orderData) {
+        const order = orderData[key]
+        tableData.unshift({
+          key: key,
+          tableNum: order.table,
+          customer: order.paymentInfo.name,
+          personCount: order.personCount,
+          status: order.status,
+          total: order.total
+        })
+      }
+      setOrderList(tableData.slice(0, 5));
+    });
+  }, [])
+
 
   return (
     <Paper className={classes.root}>
@@ -98,38 +71,22 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  {columns.map(column => {
-                    const value = row[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              );
-            })}
+            {
+              orderList.map((row, idx) => {
+                return (
+                  <TableRow hover key={idx}>
+                    <TableCell>{row.tableNum}</TableCell>
+                    <TableCell>{row.customer}</TableCell>
+                    <TableCell>{row.personCount}</TableCell>
+                    <TableCell>{row.total}</TableCell>
+                    <TableCell>{row.status}</TableCell>
+                  </TableRow>
+                )
+              })
+            }
           </TableBody>
         </Table>
       </div>
-      {/* <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        backIconButtonProps={{
-          'aria-label': 'previous page',
-        }}
-        nextIconButtonProps={{
-          'aria-label': 'next page',
-        }}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      /> */}
     </Paper>
   );
 }

@@ -13,12 +13,12 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Container from '@material-ui/core/Container';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import HeaderListItems from './HeaderListItems';
-import TableGrid from './TableGridComponent';
 import bgSVG from './../res/Plants.svg'
-import Overview from "./../Overview";
 
+import app from './../firebase';
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -36,6 +36,9 @@ const useStyles = makeStyles(theme => ({
   },
   root: {
     display: 'flex',
+  },
+  textClass:{
+    flexGrow: 1
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -90,7 +93,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function MiniDrawer() {
+export default function MiniDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -125,9 +128,18 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap className={classes.textClass}>
             Dashboard
           </Typography>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={()=>app.auth().signOut()}
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -151,14 +163,13 @@ export default function MiniDrawer() {
         </div>
         <Divider />
         <List>
-            <HeaderListItems />
+            <HeaderListItems  selectItem={props.selected}/>
         </List>
       </Drawer>
       <main className={classes.content}>
       <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          {/* <TableGrid /> */}
-          <Overview />
+          {props.childComponent}
         </Container>
       </main>
     </div>

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import app from './../firebase';
 
 const useStyles = makeStyles({
   card: {
@@ -41,9 +42,35 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SimpleCard() {
+export default function OccupancyComponent() {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+
+  const [occupied, setOccupied] = useState(0)
+  const [empty, setEmpty] = useState(100)
+
+  useEffect(() => {
+    const tablesRef = app.database().ref().child('tables')
+
+    tablesRef.on('value', snap => {
+      const tableList = snap.val()
+      const totalTables = tableList.length
+      let falseCount = 0;
+      let trueCount = 0;
+      for (let i = 0; i < totalTables; i++) {
+        if (tableList[i].status == false) {
+          falseCount++;
+        } else {
+          trueCount++;
+        }
+      }
+      console.log("Occupied: " + (trueCount / totalTables));
+      console.log("Empty: " + (falseCount / totalTables));
+
+      setOccupied(trueCount / totalTables * 100);
+      setEmpty(falseCount / totalTables * 100);
+    });
+  }, [])
+
 
   return (
     <Card className={classes.card}>
@@ -52,14 +79,14 @@ export default function SimpleCard() {
           Table Occupancy
         </Typography>
         <Typography className={classes.percentText} variant="h5" component="h2">
-          60%
+          {occupied}%
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           Tables Ocuupied
         </Typography>
 
         <Typography className={classes.lowText}>
-          Availability: <span className={classes.availableText}>40%</span>
+          Availability: <span className={classes.availableText}>{empty}%</span>
         </Typography>
       </CardContent>
     </Card>

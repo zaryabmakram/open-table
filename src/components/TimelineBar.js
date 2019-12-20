@@ -12,7 +12,7 @@ export default function VerticalSlider(props) {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
+    <React.Fragment style={{width: 500}}>
       <div className={classes.root}>
         <Slider
           orientation="vertical"

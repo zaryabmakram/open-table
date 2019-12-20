@@ -11,21 +11,21 @@ import LayersIcon from '@material-ui/icons/Layers';
 function HeaderListItems(props){      
     return(
         <div>
-            <ListItem button selected={props.selectItem==="Overview" ? true : false} onClick={()=>props.history.push("/")}>
+            <ListItem button selected={props.selectItem==="Overview" ? true : false} onClick={()=>props.history.push("/open-table/")}>
                 <ListItemIcon>
                 <DashboardIcon />
                 </ListItemIcon>
                 <ListItemText primary="Overview" />
             </ListItem>
 
-            <ListItem button selected={props.selectItem==="Tables" ? true : false} onClick={()=>props.history.push("/tables")}>
+            <ListItem button selected={props.selectItem==="Tables" ? true : false} onClick={()=>props.history.push("/open-table/tables")}>
                 <ListItemIcon>
                 <LayersIcon />
                 </ListItemIcon>
                 <ListItemText primary="Tables" />
             </ListItem>
 
-            <ListItem button selected={props.selectItem==="Orders" ? true : false} onClick={()=>props.history.push("/orders")}>
+            <ListItem button selected={props.selectItem==="Orders" ? true : false} onClick={()=>props.history.push("/open-table/orders")}>
                 <ListItemIcon>
                 <ShoppingCartIcon />
                 </ListItemIcon>

@@ -18,10 +18,10 @@ class App extends React.Component {
       <AuthProvider>
         <Router>
           <Switch>
-            <PrivateRoute exact path="/" component={() => <Header childComponent={<Overview />} selected="Overview" />} />
-            <PrivateRoute exact path="/tables" component={() => <Header childComponent={<TablePage />} selected="Tables" />} />
-            <PrivateRoute exact path="/orders" component={() => <Header childComponent={<OrderPage />} selected="Orders" />} />
-            <Route exact path="/login" component={Login} />
+            <PrivateRoute exact path="/open-table/" component={() => <Header childComponent={<Overview />} selected="Overview" />} />
+            <PrivateRoute exact path="/open-table/tables" component={() => <Header childComponent={<TablePage />} selected="Tables" />} />
+            <PrivateRoute exact path="/open-table/orders" component={() => <Header childComponent={<OrderPage />} selected="Orders" />} />
+            <Route exact path="/open-table/login" component={Login} />
             <Route component={() => <Header childComponent={<Page404 />} selected="None" />} />
           </Switch>
         </Router>

@@ -12,7 +12,7 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
                 !!user ? (
                     <RouteComponent {...routerProps} />
                 ) : (
-                        <Redirect to={"/login"} />
+                        <Redirect to={"/open-table/login"} />
                     )
             }
         />
